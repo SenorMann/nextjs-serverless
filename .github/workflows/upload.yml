@@ -1,0 +1,40 @@
+name: Upload Artefact
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  upload_artefact:
+    name: Upload Artefact
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [14.17]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set relase version
+        run: |
+          echo "RELEASE_VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm run build
+      
+      - name: Upload Artefact
+        env:
+          JFROG_AUTH: ${{ secrets.JFROG_AUTH }}
+          JFROG_USER: ${{ secrets.JFROG_USER }}
+        run: |
+          echo "registry=https://mlkmahmud.jfrog.io/artifactory/api/npm/sls-poc/" >> .npmrc
+          echo "_auth=${JFROG_AUTH}" >> .npmrc
+          echo "email=${JFROG_USER}" >> .npmrc
+          echo "always-auth-true" >> .npmrc
+          npm publish 
