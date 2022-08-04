@@ -37,4 +37,4 @@ jobs:
           echo "_auth=${JFROG_AUTH}" >> .npmrc
           echo "email=${JFROG_USER}" >> .npmrc
           echo "always-auth-true" >> .npmrc
-          npm publish 
+          npm publish --registry https://mlkmahmud.jfrog.io/artifactory/api/npm/sls-poc/
