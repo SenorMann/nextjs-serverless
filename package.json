@@ -10,7 +10,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "deploy": "serverless --debug"
+    "deploy": "serverless --debug",
+    "destroy": "serverless remove --debug"
   },
   "repository": {
     "type": "git",
