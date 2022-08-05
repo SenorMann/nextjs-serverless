@@ -1,0 +1,56 @@
+name: Deploy to production
+
+on:
+  push:
+    tags:
+      - "*"
+
+
+jobs:
+  deploy:
+    name: Deploy to AWS
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [16]
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
+      JFROG_URL: ${{ secrets.JFROG_URL }}
+      JFROG_USER: ${{ secrets.JFROG_USER }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      
+      - name: download and configure JFrog cli
+        run: |
+          npm install -g jfrog-cli-v2-jf
+          jf config add --user ${JFROG_USER} --password ${JFROG_API_KEY} --artifactory-url ${JFROG_URL} --interactive false
+
+      - name: Set latest version
+        run: |
+          echo "RELEASE_VERSION=$(npm pkg get version)" >> $GITHUB_ENV
+          
+      - name: download latest release
+        run: jf rt dl "sls-poc/nextjs-serverless/-/nextjs-serverless-${RELEASE_VERSION}.tgz"
+        env: 
+          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+
+      - name: Extract artefact
+        run: |
+          mv nextjs-serverless/-/*.tgz .
+          tar zxvf *.tgz
+
+      - name: Deploy to AWS
+        run: |
+          cd package/
+          npm install
+          npm run deploy
+
+      
