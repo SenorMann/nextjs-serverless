@@ -59,7 +59,7 @@ jobs:
 
       - name: Set latest version
         run: |
-          echo "RELEASE_VERSION=$(npm pkg get version)" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$(npm pkg get version | tr -d \")" >> $GITHUB_ENV
           
       - name: download latest release
         run: jf rt dl "sls-poc/nextjs-serverless/-/nextjs-serverless-${RELEASE_VERSION}.tgz"
