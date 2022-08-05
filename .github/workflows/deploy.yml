@@ -12,19 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Print package version
-        run: cat ./package.json
-
       - name:  'Automated Version Bump'
         uses:  'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         with:
           tag-prefix:  'v'
-  
-      - name: Print package version
-        run: cat ./package.json
-  
+    
       - name: Upload Artefact
         env:
           JFROG_AUTH: ${{ secrets.JFROG_AUTH }}
