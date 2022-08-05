@@ -55,7 +55,7 @@ jobs:
       - name: download and configure JFrog cli
         run: |
           npm install -g jfrog-cli-v2-jf
-          jf config add --user ${JFROG_USER} --password ${JFROG_API_KEY} --artifactory-url ${JFROG_URL} --interactive false
+          jf config add --user ${JFROG_USER} --password ${JFROG_API_KEY} --artifactory-url ${JFROG_URL} --interactive=false
 
       - name: Set latest version
         run: |
