@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import List from "../components/List";
 
 export default function StaticPage() {
@@ -11,6 +13,12 @@ export default function StaticPage() {
   }, []);
 
   return (
-    <List rows={rows} />
+    <>
+      <Header />
+      <main>
+        <List rows={rows} />
+      </main>
+      <Footer />
+    </>
   )
 }

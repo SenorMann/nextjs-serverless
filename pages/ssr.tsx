@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
-import React from "react";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
 import List from "../components/List";
 
 
@@ -10,12 +10,13 @@ type Props = {
 
 export default function SSRPage({ rows }: Props) {
   return (
-    <div style={{ minHeight: "100vh" }}>
+    <>
+      <Header />
       <main>
         <List rows={rows} />
       </main>
       <Footer />
-    </div>
+    </>
   )
 }
 

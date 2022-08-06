@@ -1,2 +1,16 @@
-nextjs-serverless:
-  component: "@sls-next/serverless-component"
+nextjs-sls:
+  component: "@sls-next/serverless-component@3.7.0"
+  inputs:
+    bucketName: super-random-malik-bucket
+    memory: 1024
+    name:
+      defaultLambda: DefaultRouteHandler
+      apiLambda: ApiRouteHandler
+      imageLambda: ImageHandler
+    runtime: "nodejs16.x"
+    timeout: 30
+    tags:
+      name: NextJS App
+    removeOldLambdaVersions: true
+
+
