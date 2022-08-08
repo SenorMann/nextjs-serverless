@@ -4,14 +4,13 @@
   "main": "index.js",
   "devDependencies": {
     "@types/node": "^18.6.3",
-    "serverless": "2.72.2",
     "typescript": "^4.7.4"
   },
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "deploy": "serverless --debug",
-    "destroy": "serverless remove --debug"
+    "deploy": "serverless-patched --debug=true",
+    "destroy": "serverless remove --debug=true"
   },
   "repository": {
     "type": "git",
@@ -29,6 +28,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/material": "^5.9.3",
+    "@sls-next/serverless-patched": "^3.4.0",
     "next": "^12.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

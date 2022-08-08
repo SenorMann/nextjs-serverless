@@ -1,5 +1,5 @@
 nextjs-sls:
-  component: "@sls-next/serverless-component@3.7.0"
+  component: "@sls-next/serverless-component"
   inputs:
     bucketName: super-random-malik-bucket
     memory: 1024
